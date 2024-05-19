@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:oop/business_logic/models/restaurants_info.dart';
+import 'package:oop/business_logic/models/details.dart';
 import 'package:sizer/sizer.dart';
 
-class RestaurantContainer extends StatelessWidget {
-  final RestaurantsInfoModel restaurant;
-  const RestaurantContainer({Key? key, required this.restaurant}) : super(key: key);
+class CustomContainer extends StatelessWidget {
+  final Details detail;
+  const CustomContainer({Key? key, required this.detail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +12,14 @@ class RestaurantContainer extends StatelessWidget {
       width: 45.w,
       margin: EdgeInsets.only(right: 3.w),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
         color: CupertinoColors.systemGrey6
       ),
       child: Column(
         children: [
-          Image.asset(restaurant.logo),
-          Text(restaurant.name),
-          Text(restaurant.distance)
+          Image.asset(detail.photo),
+          Text(detail.title),
+          Text(detail.subTitle)
         ],
       ),
     );

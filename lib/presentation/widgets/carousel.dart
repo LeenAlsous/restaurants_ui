@@ -16,7 +16,7 @@ class _CarouselState extends State<Carousel> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Container(height: 20.h,
+    return SizedBox(height: 20.h,
     width: 90.w,
     child: PageView.builder(itemBuilder: (context, index) => ClipRRect(borderRadius: BorderRadius.circular(4.w),child: Image.asset(images[index], fit: BoxFit.fill,)), itemCount: images.length));
   }
