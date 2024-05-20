@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
           // primary color: 73211D
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(primaryColor: const Color(0xFF73211D)),
+          theme: ThemeData(primaryColor: const Color(0xFF823832)),
           home: const BottomNavBar());
     });
   }
