@@ -80,6 +80,12 @@ class LogIn extends StatelessWidget {
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   )),
+              TextButton(
+                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const Registration()));},
+                  child: const Text(
+                    'Forgot password?',
+                    style: TextStyle(color: Color(0xFF73211D)),
+                  )),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('Don\'t have an account?',
                     style: TextStyle(fontSize: 12.sp, color: Colors.white)),
