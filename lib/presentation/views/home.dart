@@ -103,14 +103,17 @@ class HomePage extends StatelessWidget {
                         ))
                   ],
                 ),
-                SizedBox(
-                    height: 30.h,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          CustomContainer(detail: popularMenu[index]),
-                      itemCount: popularMenu.length,
-                    )),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 7.h),
+                  child: SizedBox(
+                      height: 25.5.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) =>
+                            CustomContainer(detail: popularMenu[index]),
+                        itemCount: popularMenu.length,
+                      )),
+                ),
               ],
             ),
           ),

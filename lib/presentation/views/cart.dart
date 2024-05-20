@@ -74,8 +74,8 @@ class CartPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Spacer(),
-                      SizedBox(width: 80.w, height: 7.h,child: ElevatedButton(onPressed: (){}, child: Text('Place my order', style: TextStyle(color: Theme.of(context).primaryColor),), style: ElevatedButton.styleFrom(backgroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.w))),))
+                      const Spacer(),
+                      SizedBox(width: 80.w, height: 7.h,child: ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(backgroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.w))), child: Text('Place my order', style: TextStyle(color: Theme.of(context).primaryColor),),))
                     ],
                   ),
                 ),

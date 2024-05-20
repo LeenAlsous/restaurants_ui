@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oop/presentation/views/bottom_nav_bar.dart';
+import 'package:oop/presentation/views/login.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           // primary color: 73211D
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primaryColor: const Color(0xFF823832)),
-          home: const BottomNavBar());
+          home: LogIn());
     });
   }
 }
