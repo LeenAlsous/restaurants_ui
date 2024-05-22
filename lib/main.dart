@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oop/presentation/views/restaurant.dart';
+import 'package:oop/presentation/views/login.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primaryColor: const Color(0xFF823832)),
-          home: const RestaurantPage());
+          home: LogIn());
     });
   }
 }

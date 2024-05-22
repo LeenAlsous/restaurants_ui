@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oop/dummy_data/dummy_popular_menu.dart';
 import 'package:oop/dummy_data/restaurants_dummy_info.dart';
+import 'package:oop/presentation/views/restaurant.dart';
 import 'package:oop/presentation/widgets/carousel.dart';
-import 'package:oop/presentation/widgets/restaurant_container.dart';
+import 'package:oop/presentation/widgets/custom_container.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -88,7 +89,7 @@ class HomePage extends StatelessWidget {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) =>
-                          CustomContainer(detail: restaurants[index]),
+                          GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));},child: CustomContainer(detail: restaurants[index])),
                       itemCount: restaurants.length,
                     )),
                 Row(
