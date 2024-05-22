@@ -5,6 +5,7 @@ import 'package:oop/dummy_data/restaurants_dummy_info.dart';
 import 'package:oop/presentation/views/restaurant.dart';
 import 'package:oop/presentation/widgets/carousel.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sizer/sizer.dart';
 
 class HomePage extends StatelessWidget {
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Find your\nfavorite food'),
+                    Text('Find your\nfavorite food', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
                     Icon(
                       Icons.notifications_none,
                       color: Colors.greenAccent,
@@ -88,8 +89,9 @@ class HomePage extends StatelessWidget {
                     height: 27.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));
                       itemBuilder: (context, index) =>
-                          GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));},child: CustomContainer(detail: restaurants[index])),
+                          GestureDetector(onTap: (){pushWithoutNavBar(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));},child: CustomContainer(detail: restaurants[index])),
                       itemCount: restaurants.length,
                     )),
                 Row(

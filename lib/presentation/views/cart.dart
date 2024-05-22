@@ -22,13 +22,13 @@ class CartPage extends StatelessWidget {
                 subtitle: Text(restaurants[0].items[0].price),
                 leading: ClipRRect(borderRadius: BorderRadius.circular(4.w),child: Image.asset(restaurants[0].items[0].image)),
                trailing: SizedBox(
-                 width: 18.w,
+                 width: 20.w,
                  child: Row(
                    children: [
                      GestureDetector(child: Container(width: 6.w, height: 5.5.w, decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Theme.of(context).primaryColor), child: const Center(child: Text('-', style: TextStyle(color: Color(0xFFcaa49f)),),),),),
                      Padding(
                        padding: EdgeInsets.symmetric(horizontal: 2.w),
-                       child: Text(quantity.toString()),
+                       child: Text(quantity.toString(), style: TextStyle(fontSize: 16.sp),),
                      ),
                      GestureDetector(child: Container(width: 6.w, height: 5.5.w, decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color:  const Color(0xFFcaa49f)), child: Center(child: Text('+', style: TextStyle(color: Theme.of(context).primaryColor),),),),)
                    ],
