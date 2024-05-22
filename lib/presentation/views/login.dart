@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oop/helper/validation_functions.dart';
-import 'package:oop/presentation/views/home.dart';
+import 'package:oop/presentation/views/bottom_nav_bar.dart';
 import 'package:oop/presentation/views/registration.dart';
 import 'package:oop/presentation/widgets/background.dart';
 import 'package:sizer/sizer.dart';
@@ -94,7 +94,7 @@ class LogIn extends StatelessWidget {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                                  builder: (context) => const BottomNavBar()));
                         }
                       },
                       style: ElevatedButton.styleFrom(

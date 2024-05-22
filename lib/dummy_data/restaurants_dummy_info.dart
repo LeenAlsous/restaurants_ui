@@ -7,9 +7,9 @@ const restaurants = [
       name: 'The Gourmet Spot',
       logo: 'assets/farm.png',
       distance: '1.2 miles',
-      description: 'A cozy spot offering a fusion of modern and traditional cuisines.',
+      description: 'A cozy spot offering a fusion of modern and traditional cuisines. The Gourmet Spot prides itself on its exquisite blend of flavors and innovative dishes, providing a dining experience that tantalizes the taste buds and leaves a lasting impression. With a warm and inviting ambiance, it is perfect for both casual meals and special occasions.',
       rating: '4.8',
-      tag: 'Fine Dining',
+      tag: 'Fresh',
       items: [
         MenuItem(1, 'Truffle Risotto', '25.99', 'assets/pasta.jpeg'),
         MenuItem(2, 'Filet Mignon', '39.99', 'assets/pasta.jpeg'),
@@ -24,9 +24,9 @@ const restaurants = [
       name: 'Pizza Paradise',
       logo: 'assets/pizza_logo.png',
       distance: '0.5 miles',
-      description: 'A family-friendly pizzeria with a wide variety of toppings and styles.',
+      description: 'A family-friendly pizzeria with a wide variety of toppings and styles. Pizza Paradise is the go-to place for pizza lovers, offering everything from classic Margherita to inventive specialty pies. Its welcoming environment makes it ideal for family gatherings and casual outings, ensuring a delightful experience for everyone.',
       rating: '4.5',
-      tag: 'Fast Food',
+      tag: 'Popular',
       items: [
         MenuItem(1, 'Margherita Pizza', '14.99', 'assets/pasta.jpeg'),
         MenuItem(2, 'Pepperoni Pizza', '16.99', 'assets/pasta.jpeg'),
@@ -41,7 +41,7 @@ const restaurants = [
       name: 'Sushi Haven',
       logo: 'assets/Japanese_food.png',
       distance: '2.3 miles',
-      description: 'A sushi lover\'s dream with fresh fish and creative rolls.',
+      description: 'A sushi lover\'s dream with fresh fish and creative rolls. Sushi Haven is renowned for its artistic presentation and high-quality ingredients, making it a top destination for sushi enthusiasts. The restaurant offers a serene atmosphere where guests can savor meticulously crafted rolls and sashimi.',
       rating: '4.7',
       tag: 'Japanese',
       items: [
@@ -58,9 +58,9 @@ const restaurants = [
       name: 'Veggie Delight',
       logo: 'assets/vegan.png',
       distance: '1.1 miles',
-      description: 'A vegetarian and vegan restaurant with a variety of healthy options.',
+      description: 'A vegetarian and vegan restaurant with a variety of healthy options. Veggie Delight caters to health-conscious diners with its diverse menu of plant-based dishes. The restaurant emphasizes fresh, organic ingredients and innovative cooking techniques, offering a vibrant and wholesome dining experience.',
       rating: '4.4',
-      tag: 'Vegetarian',
+      tag: 'Vegan',
       items: [
         MenuItem(1, 'Grilled Vegetable Platter', '13.99', 'assets/pasta.jpeg'),
         MenuItem(2, 'Vegan Burger', '11.99', 'assets/pasta.jpeg'),
@@ -75,7 +75,7 @@ const restaurants = [
       name: 'Taco Town',
       logo: 'assets/taco.png',
       distance: '0.8 miles',
-      description: 'A casual spot serving up authentic Mexican tacos and more.',
+      description: 'A casual spot serving up authentic Mexican tacos and more. Taco Town is known for its vibrant flavors and street-food-inspired menu, making it a favorite among taco enthusiasts. The laid-back atmosphere and quick service make it a great spot for a tasty, informal meal.',
       rating: '4.3',
       tag: 'Mexican',
       items: [
@@ -92,8 +92,8 @@ const restaurants = [
       name: 'Pasta Palace',
       logo: 'assets/fast_food.png',
       distance: '1.5 miles',
-      description: 'An Italian restaurant with a range of classic and contemporary pasta dishes.',
-      rating: '4.7',
+      description: 'An Italian restaurant with a range of classic and contemporary pasta dishes. Pasta Palace offers an extensive menu of both traditional and innovative pasta creations, making it a haven for pasta aficionados. The restaurant\'s elegant yet cozy setting is perfect for enjoying a hearty Italian meal.',
+  rating: '4.7',
       tag: 'Italian',
       items: [
         MenuItem(1, 'Spaghetti Carbonara', '14.99', 'assets/pasta.jpeg'),
@@ -109,7 +109,7 @@ const restaurants = [
       name: 'Bakery Bliss',
       logo: 'assets/pink_cake.png',
       distance: '0.4 miles',
-      description: 'A delightful bakery offering a wide range of freshly baked goods.',
+      description: 'A delightful bakery offering a wide range of freshly baked goods. Bakery Bliss is a haven for those with a sweet tooth, featuring an array of pastries, cakes, and breads that are baked daily. The cozy shop invites customers to indulge in delicious treats while enjoying a warm and friendly atmosphere.',
       rating: '4.9',
       tag: 'Bakery',
       items: [

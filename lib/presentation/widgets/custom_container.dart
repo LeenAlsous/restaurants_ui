@@ -16,8 +16,12 @@ class CustomContainer extends StatelessWidget {
         color: CupertinoColors.systemGrey6
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(detail.photo),
+          Padding(
+            padding: EdgeInsets.only(top: 1.h),
+            child: ClipRRect( borderRadius: BorderRadius.circular(10), child: Image.asset(detail.photo, width: 40.w, height: 17.h, fit: BoxFit.fill,)),
+          ),
           Text(detail.title),
           Text(detail.subTitle)
         ],
