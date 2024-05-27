@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   persistent_bottom_nav_bar_v2: 5.2.3
   sizer: 2.0.15
+  flutter_secure_storage: 9.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oop/helper/secure_storage.dart';
 import 'package:oop/helper/validation_functions.dart';
 import 'package:oop/presentation/views/bottom_nav_bar.dart';
 import 'package:oop/presentation/views/registration.dart';
@@ -8,6 +9,9 @@ import 'package:sizer/sizer.dart';
 class LogIn extends StatelessWidget {
   LogIn({Key? key}) : super(key: key);
   final formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final SecureStorage secureStorage = SecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class LogIn extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: emailController,
                     validator: (email) {
                       if (!Validation.isEmail(email!)) {
                         return 'Invalid email format';
@@ -63,6 +68,7 @@ class LogIn extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: passwordController,
                     validator: (password) {
                       if (!Validation.isPassword(password!)) {
                         return 'at least 6 characters, symbols, capital letters,\nand numbers';
@@ -91,6 +97,8 @@ class LogIn extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
+                          secureStorage.writeData('email', emailController.text);
+                          secureStorage.writeData('password', passwordController.text);
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
