@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primaryColor: const Color(0xFF823832)),
           home: FutureBuilder<String?>(
-            future: secureStorage.readData('email'),
+            future: secureStorage.readData(secureStorage.emailKey),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
