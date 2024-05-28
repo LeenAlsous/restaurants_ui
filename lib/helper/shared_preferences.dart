@@ -19,4 +19,14 @@ class SharedPrefs{
     SharedPreferences prefs = await _prefs;
     prefs.remove(restaurantID);
   }
+
+  void setQuantity(String itemID, int quantity) async{
+    SharedPreferences pref = await _prefs;
+    pref.setInt(itemID, quantity);
+  }
+
+  Future<int> getQuantity(String itemID) async{
+    SharedPreferences pref = await _prefs;
+    return pref.getInt(itemID) ?? 1;
+  }
 }

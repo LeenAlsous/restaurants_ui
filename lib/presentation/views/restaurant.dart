@@ -15,7 +15,6 @@ class RestaurantPage extends StatefulWidget {
 }
 
 class _RestaurantPageState extends State<RestaurantPage> {
-  bool isFavorite = false;
   SharedPrefs pref = SharedPrefs();
 
   @override
@@ -119,11 +118,14 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 },
                               ),
                               onPressed: () async {
-                                if (await pref.getFavorite(widget.restaurant.id) == true) {
+                                if (await pref.getFavorite(widget.restaurant.id.toString()) == true) {
+                                  print("test1");
                                   pref.removeFavorite(widget.restaurant.id);
                                 } else {
-                                  pref.setFavorite(widget.restaurant.id);
+                                  print("test2");
+                                  pref.setFavorite(widget.restaurant.id.toString());
                                 }
+
                                 setState(() {
                                 });
                               }),

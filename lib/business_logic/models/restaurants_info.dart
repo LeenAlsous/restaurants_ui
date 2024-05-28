@@ -11,7 +11,6 @@ class RestaurantInfo implements Details {
   final String rating;
   final String tag;
   final List<MenuItem> items;
-  final bool isFavorite = false;
 
   const RestaurantInfo(
       {required this.name,
