@@ -18,22 +18,22 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    quantity = pref.getQuantity(restaurants[0].items[0].id);
+    quantity = pref.getQuantity(restaurants[0].items[2].id);
   }
 
   void increment() async {
-    int current = await pref.getQuantity(restaurants[0].items[0].id);
+    int current = await pref.getQuantity(restaurants[0].items[2].id);
     setState(() {
-      pref.setQuantity(restaurants[0].items[0].id, current + 1);
+      pref.setQuantity(restaurants[0].items[2].id, current + 1);
       quantity = Future.value(current + 1);
     });
   }
 
   void decrement() async {
-    int current = await pref.getQuantity(restaurants[0].items[0].id);
+    int current = await pref.getQuantity(restaurants[0].items[2].id);
     if (current > 1) {
       setState(() {
-        pref.setQuantity(restaurants[0].items[0].id, current - 1);
+        pref.setQuantity(restaurants[0].items[2].id, current - 1);
         quantity = Future.value(current - 1);
       });
     }
@@ -59,13 +59,13 @@ class _CartPageState extends State<CartPage> {
             Card(
               color: Colors.white,
               child: ListTile(
-                title: Text(restaurants[0].items[0].item),
-                subtitle: Text(restaurants[0].items[0].price),
+                title: Text(restaurants[0].items[2].item),
+                subtitle: Text(restaurants[0].items[2].price),
                 leading: ClipRRect(
                     borderRadius: BorderRadius.circular(4.w),
-                    child: Image.asset(restaurants[0].items[0].image)),
+                    child: Image.asset(restaurants[0].items[2].image)),
                 trailing: SizedBox(
-                  width: 20.w,
+                  width: 23.w,
                   child: Row(
                     children: [
                       GestureDetector(

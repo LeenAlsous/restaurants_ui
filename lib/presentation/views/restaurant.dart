@@ -71,27 +71,23 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 borderRadius: BorderRadius.circular(50)),
                             child: Center(
                                 child: Text(
-                                  widget.restaurant.tag,
-                                  style: TextStyle(
-                                      color: Theme
-                                          .of(context)
-                                          .primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12.sp),
-                                )),
+                              widget.restaurant.tag,
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.sp),
+                            )),
                           ),
                           const Spacer(),
                           IconButton(
                             style: const ButtonStyle(
                                 backgroundColor:
-                                MaterialStatePropertyAll(Color(0xFFcaa49f)),
+                                    MaterialStatePropertyAll(Color(0xFFcaa49f)),
                                 shape:
-                                MaterialStatePropertyAll(CircleBorder())),
+                                    MaterialStatePropertyAll(CircleBorder())),
                             onPressed: () {},
                             icon: Icon(Icons.location_on,
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 25.sp),
                           ),
                           SizedBox(
@@ -102,32 +98,42 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                   backgroundColor: MaterialStatePropertyAll(
                                       Color(0xFFcaa49f)),
                                   shape:
-                                  MaterialStatePropertyAll(CircleBorder())),
+                                      MaterialStatePropertyAll(CircleBorder())),
                               icon: FutureBuilder<bool>(
                                 future: pref.getFavorite(widget.restaurant.id),
-                                builder: (context, snapshot){
-                                  if(snapshot.connectionState == ConnectionState.waiting){
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
                                     return Container();
-                                  } else{
-                                    if(snapshot.hasData && snapshot.data != false){
-                                      return Icon(Icons.favorite, color: Theme.of(context).primaryColor, size: 25.sp,);
-                                    }else{
-                                      return Icon(Icons.favorite_border_rounded, color: Theme.of(context).primaryColor, size: 25.sp,);
+                                  } else {
+                                    if (snapshot.hasData &&
+                                        snapshot.data != false) {
+                                      return Icon(
+                                        Icons.favorite,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 25.sp,
+                                      );
+                                    } else {
+                                      return Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 25.sp,
+                                      );
                                     }
                                   }
                                 },
                               ),
                               onPressed: () async {
-                                if (await pref.getFavorite(widget.restaurant.id.toString()) == true) {
+                                if (await pref
+                                    .getFavorite(widget.restaurant.id) ==
+                                    true) {
                                   print("test1");
                                   pref.removeFavorite(widget.restaurant.id);
                                 } else {
                                   print("test2");
-                                  pref.setFavorite(widget.restaurant.id.toString());
+                                  pref.setFavorite(widget.restaurant.id);
                                 }
-
-                                setState(() {
-                                });
+                                setState(() {});
                               }),
                         ],
                       ),
@@ -187,10 +193,9 @@ class _RestaurantPageState extends State<RestaurantPage> {
                           height: 25.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                CustomContainer(
-                                  detail: widget.restaurant.items[index],
-                                ),
+                            itemBuilder: (context, index) => CustomContainer(
+                              detail: widget.restaurant.items[index],
+                            ),
                             itemCount: widget.restaurant.items.length,
                           )),
                       SizedBox(height: 2.h),
@@ -204,25 +209,23 @@ class _RestaurantPageState extends State<RestaurantPage> {
                         height: 10.h,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) =>
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    users[index].profileImage,
-                                    height: 10.h,
-                                    width: 10.h,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(users[index].name),
-                                      Text(users[index].testimonial),
-                                    ],
-                                  )
-                                ],
+                          itemBuilder: (context, index) => Row(
+                            children: [
+                              Image.asset(
+                                users[index].profileImage,
+                                height: 10.h,
+                                width: 10.h,
                               ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(users[index].name),
+                                  Text(users[index].testimonial),
+                                ],
+                              )
+                            ],
+                          ),
                           itemCount: users.length,
                         ),
                       )
