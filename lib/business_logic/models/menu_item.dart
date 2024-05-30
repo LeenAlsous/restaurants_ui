@@ -1,7 +1,7 @@
 import 'package:oop/business_logic/models/details.dart';
 
 class MenuItem implements Details {
-  final int id;
+  final String id;
   final String item;
   final String price;
   final String image;
