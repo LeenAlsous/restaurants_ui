@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:oop/helper/secure_storage.dart';
 import 'package:oop/presentation/views/bottom_nav_bar.dart';
 import 'package:oop/presentation/views/login.dart';
 import 'package:sizer/sizer.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
