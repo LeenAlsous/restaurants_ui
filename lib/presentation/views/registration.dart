@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_auth.dart';
 import 'package:oop/helper/validation_functions.dart';
 import 'package:oop/presentation/views/login.dart';
 import 'package:oop/presentation/widgets/background.dart';
@@ -7,6 +8,11 @@ import 'package:sizer/sizer.dart';
 class Registration extends StatelessWidget {
   Registration({Key? key}) : super(key: key);
   final fKey = GlobalKey<FormState>();
+  final FireAuth fire = FireAuth();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +78,7 @@ class Registration extends StatelessWidget {
                       hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                       focusedBorder: _getBorderStyle(),
                       enabledBorder: _getBorderStyle(),
+                      errorBorder: _getBorderStyle()
                     ),
                   ),
                 ),
@@ -79,9 +86,12 @@ class Registration extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: emailController,
                     validator: (email) {
                       if (!Validation.isEmail(email!)) {
                         return 'Invalid email format';
+                      } else if(FireAuth.usedEmail.isNotEmpty){
+                        return FireAuth.usedEmail;
                       }
                       return null;
                     },
@@ -101,6 +111,7 @@ class Registration extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: passwordController,
                     validator: (password) {
                       if (!Validation.isPassword(password!)) {
                         return 'at least 6 characters, symbols, capital letters,\nand numbers';
@@ -123,7 +134,13 @@ class Registration extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
-                    // color FDF9E2
+                    controller: confirmController,
+                    validator: (password){
+                      if(password != passwordController.text){
+                        return 'passwords do not match';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 2.h),
@@ -143,6 +160,7 @@ class Registration extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         if(fKey.currentState!.validate()){
+                          fire.registerUser(email: emailController.text, password: passwordController.text);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => LogIn()));
                         }

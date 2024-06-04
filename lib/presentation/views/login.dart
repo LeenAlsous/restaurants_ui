@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_auth.dart';
 import 'package:oop/helper/secure_storage.dart';
-import 'package:oop/helper/validation_functions.dart';
-import 'package:oop/presentation/views/bottom_nav_bar.dart';
 import 'package:oop/presentation/views/registration.dart';
 import 'package:oop/presentation/widgets/background.dart';
 import 'package:sizer/sizer.dart';
@@ -12,6 +11,7 @@ class LogIn extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final SecureStorage secureStorage = SecureStorage();
+  final FireAuth fire = FireAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +43,6 @@ class LogIn extends StatelessWidget {
                   width: 78.w,
                   child: TextFormField(
                     controller: emailController,
-                    validator: (email) {
-                      if (!Validation.isEmail(email!)) {
-                        return 'Invalid email format';
-                      }
-                      return null;
-                    },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 2.h),
@@ -69,12 +63,6 @@ class LogIn extends StatelessWidget {
                   width: 78.w,
                   child: TextFormField(
                     controller: passwordController,
-                    validator: (password) {
-                      if (!Validation.isPassword(password!)) {
-                        return 'at least 6 characters, symbols, capital letters,\nand numbers';
-                      }
-                      return null;
-                    },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 2.h),
@@ -96,14 +84,13 @@ class LogIn extends StatelessWidget {
                     height: 5.5.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          secureStorage.writeData('email', emailController.text);
-                          secureStorage.writeData('password', passwordController.text);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const BottomNavBar()));
-                        }
+                        fire.logInUser(context,
+                            email: emailController.text,
+                            password: passwordController.text);
+                        secureStorage.writeData('email', emailController.text);
+                        secureStorage.writeData(
+                            'password', passwordController.text);
+                        FocusManager.instance.primaryFocus!.unfocus();
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
