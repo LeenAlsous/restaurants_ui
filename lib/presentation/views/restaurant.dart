@@ -127,10 +127,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 if (await pref
                                     .getFavorite(widget.restaurant.id) ==
                                     true) {
-                                  print("test1");
                                   pref.removeFavorite(widget.restaurant.id);
                                 } else {
-                                  print("test2");
                                   pref.setFavorite(widget.restaurant.id);
                                 }
                                 setState(() {});
