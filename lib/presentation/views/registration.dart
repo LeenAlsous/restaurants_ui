@@ -160,9 +160,8 @@ class Registration extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         if(fKey.currentState!.validate()){
-                          fire.registerUser(email: emailController.text, password: passwordController.text);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => LogIn()));
+                          fire.registerUser(context, email: emailController.text, password: passwordController.text);
+                          FocusManager.instance.primaryFocus!.unfocus();
                         }
                       },
                       style: ElevatedButton.styleFrom(
