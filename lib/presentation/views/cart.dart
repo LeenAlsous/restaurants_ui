@@ -60,7 +60,7 @@ class _CartPageState extends State<CartPage> {
               color: Colors.white,
               child: ListTile(
                 title: Text(restaurants[0].items[2].item),
-                subtitle: Text(restaurants[0].items[2].price),
+                subtitle: Text(restaurants[0].items[2].price.toString()),
                 leading: ClipRRect(
                     borderRadius: BorderRadius.circular(4.w),
                     child: Image.asset(restaurants[0].items[2].image)),

@@ -3,7 +3,7 @@ import 'package:oop/business_logic/models/details.dart';
 class MenuItem implements Details {
   final String id;
   final String item;
-  final String price;
+  final double price;
   final String image;
 
   const MenuItem(this.id, this.item, this.price, this.image);
@@ -15,5 +15,5 @@ class MenuItem implements Details {
   String get title => item;
 
   @override
-  String get subTitle => price;
+  String get subTitle => price.toString();
 }

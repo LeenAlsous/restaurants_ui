@@ -20,7 +20,7 @@ class CustomContainer extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 1.h),
-            child: ClipRRect( borderRadius: BorderRadius.circular(10), child: Image.asset(detail.photo, width: 40.w, height: 17.h, fit: BoxFit.fill,)),
+            child: ClipRRect( borderRadius: BorderRadius.circular(10), child: Image.network(detail.photo, width: 40.w, height: 17.h, fit: BoxFit.fill,)),
           ),
           Text(detail.title),
           Text(detail.subTitle)
