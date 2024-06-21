@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oop/business_logic/firebase/firebase_db.dart';
@@ -101,14 +102,16 @@ class HomePage extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));
                           itemBuilder: (context, index) {
-                            RestaurantInfo restaurant = restaurants[index].data();
+                            QueryDocumentSnapshot doc = restaurants[index];
+                            RestaurantInfo restaurant = doc.data() as RestaurantInfo;
+                            String documentId = doc.id;
                             return GestureDetector(
                                 onTap: () {
                                   pushWithoutNavBar(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => RestaurantPage(
-                                            restaurant: restaurant),
+                                            restaurant: restaurant, id: documentId),
                                       ));
                                 },
                                 child: CustomContainer(detail: restaurant,)

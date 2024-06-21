@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_db.dart';
+import 'package:oop/business_logic/models/menu_item.dart';
 import 'package:oop/business_logic/models/restaurants_info.dart';
 import 'package:oop/dummy_data/users_dummy_data.dart';
 import 'package:oop/helper/shared_preferences.dart';
@@ -7,8 +10,8 @@ import 'package:sizer/sizer.dart';
 
 class RestaurantPage extends StatefulWidget {
   final RestaurantInfo restaurant;
-
-  const RestaurantPage({Key? key, required this.restaurant}) : super(key: key);
+  final String id;
+  const RestaurantPage({Key? key, required this.restaurant, required  this.id}) : super(key: key);
 
   @override
   State<RestaurantPage> createState() => _RestaurantPageState();
@@ -187,15 +190,27 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               )),
                         ],
                       ),
-                      SizedBox(
-                          height: 25.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => CustomContainer(
-                              detail: widget.restaurant.items[index],
-                            ),
-                            itemCount: widget.restaurant.items.length,
-                          )),
+                      StreamBuilder(stream: FireStoreDb().getMenu(widget.id), builder: (context, snapshot) {
+                        List menu = snapshot.data?.docs ??[];
+                        if (menu.isEmpty) {
+                          return const Center(
+                            child: Text('No restaurants available'),
+                          );
+                        } return SizedBox(
+                            height: 25.h,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot doc = menu[index];
+                                MenuItem item = doc.data() as MenuItem;
+                                // String id = doc.id; //use it later
+                                return CustomContainer(
+                                detail: item,
+                              );
+                              },
+                              itemCount: menu.length,
+                            ));
+                      },),
                       SizedBox(height: 2.h),
                       const Align(
                           alignment: Alignment.centerLeft,
