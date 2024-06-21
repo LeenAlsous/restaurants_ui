@@ -11,15 +11,15 @@ const restaurants = [
     rating: '4.8',
     tag: 'Fresh',
     items: [
-      MenuItem('1.1', 'Truffle Risotto', 35.99, 'assets/pasta.jpeg'),
-      MenuItem('1.2', 'Filet Mignon', 39.99, 'assets/pasta.jpeg'),
-      MenuItem('1.3', 'Lobster Bisque', 19.99, 'assets/pasta.jpeg'),
-      MenuItem('1.4', 'Duck Confit', 28.99, 'assets/pasta.jpeg'),
-      MenuItem('1.5', 'Chocolate Soufflé', 12.99, 'assets/pasta.jpeg'),
-      MenuItem('1.6', 'Wine Pairing', 15.99, 'assets/pasta.jpeg'),
+      MenuItem('1.1', 'Truffle Risotto', 35.99, 'assets/pasta.jpeg', []),
+      MenuItem('1.2', 'Filet Mignon', 39.99, 'assets/pasta.jpeg', []),
+      MenuItem('1.3', 'Lobster Bisque', 19.99, 'assets/pasta.jpeg', []),
+      MenuItem('1.4', 'Duck Confit', 28.99, 'assets/pasta.jpeg', []),
+      MenuItem('1.5', 'Chocolate Soufflé', 12.99, 'assets/pasta.jpeg', []),
+      MenuItem('1.6', 'Wine Pairing', 15.99, 'assets/pasta.jpeg', []),
     ],
   ),
-  RestaurantInfo(
+  /*RestaurantInfo(
     id: '2',
     name: 'Pizza Paradise',
     logo: 'assets/pizza_logo.png',
@@ -120,5 +120,5 @@ const restaurants = [
       MenuItem('7.5', 'Red Velvet Cupcake', 2.99, 'assets/pasta.jpeg'),
       MenuItem('7.6', 'Cheesecake Slice', 4.99, 'assets/pasta.jpeg'),
     ],
-  ),
+  ),*/
 ];

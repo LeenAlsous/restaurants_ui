@@ -6,18 +6,19 @@ class MenuItem implements Details {
   final String item;
   final double price;
   final String image;
+  final List<dynamic> ingredients;
 
-  const MenuItem(this.id, this.item, this.price, this.image);
+  const MenuItem(this.id, this.item, this.price, this.image, this.ingredients);
 
   factory MenuItem.fromMap(DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options) {
     final data = snapshot.data();
     return MenuItem(
-        data?['id'] ?? '', data?['item'], data?['price'], data?['image']);
+        data?['id'] ?? '', data?['item'], data?['price'], data?['image'], data?['ingredients']??[]);
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'item': item, 'price': price, 'image': image};
+    return {'id': id, 'item': item, 'price': price, 'image': image, 'ingredients': ingredients};
   }
 
   @override
