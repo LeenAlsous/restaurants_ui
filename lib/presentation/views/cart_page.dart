@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oop/dummy_data/restaurants_dummy_info.dart';
+import 'package:oop/business_logic/firebase/firebase_db.dart';
+import 'package:oop/business_logic/models/cart_item.dart';
 import 'package:oop/helper/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,24 +14,23 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  late Future<int> quantity;
   SharedPrefs pref = SharedPrefs();
 
   @override
   void initState() {
     super.initState();
-    quantity = pref.getQuantity(restaurants[0].items[2].id);
+    //quantity = pref.getQuantity(restaurants[0].items[2].id);
   }
 
-  void increment() async {
+  /* void increment() async {
     int current = await pref.getQuantity(restaurants[0].items[2].id);
     setState(() {
       pref.setQuantity(restaurants[0].items[2].id, current + 1);
       quantity = Future.value(current + 1);
     });
-  }
+  }*/
 
-  void decrement() async {
+  /*void decrement() async {
     int current = await pref.getQuantity(restaurants[0].items[2].id);
     if (current > 1) {
       setState(() {
@@ -37,7 +38,7 @@ class _CartPageState extends State<CartPage> {
         quantity = Future.value(current - 1);
       });
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -56,78 +57,83 @@ class _CartPageState extends State<CartPage> {
             SizedBox(
               height: 3.h,
             ),
-            Card(
-              color: Colors.white,
-              child: ListTile(
-                title: Text(restaurants[0].items[2].item),
-                subtitle: Text(restaurants[0].items[2].price.toString()),
-                leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(4.w),
-                    child: Image.asset(restaurants[0].items[2].image)),
-                trailing: SizedBox(
-                  width: 23.w,
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          decrement();
-                        },
-                        child: Container(
-                          width: 6.w,
-                          height: 5.5.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: Theme.of(context).primaryColor),
-                          child: Center(
-                              child: Icon(CupertinoIcons.minus,
-                                  size: 12.sp, color: const Color(0xFFcaa49f))),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 2.w),
-                        child: FutureBuilder<int>(
-                          future: quantity,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Container(
-                                width: 3.w,
-                              );
-                            } else {
-                              if (snapshot.hasData) {
-                                return Text(snapshot.data.toString(),
-                                    style: TextStyle(fontSize: 16.sp));
-                              } else {
-                                return Text('1',
-                                    style: TextStyle(fontSize: 16.sp));
-                              }
-                            }
-                          },
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          increment();
-                        },
-                        child: Container(
-                          width: 6.w,
-                          height: 5.5.w,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              color: const Color(0xFFcaa49f)),
-                          child: Center(
-                            child: Icon(CupertinoIcons.plus,
-                                color: Theme.of(context).primaryColor,
-                                size: 12.sp),
+            StreamBuilder(
+              stream: FireStoreDb().getCart(),
+              builder: (context, snapshot) {
+                List cart = snapshot.data?.docs ?? [];
+                if (snapshot.data == null || cart.isEmpty) {
+                  return const Center(
+                    child: Text('No items added'),
+                  );
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: cart.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot doc = cart[index];
+                      CartItem cartItem = doc.data() as CartItem;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 0.5.h),
+                        child: Card(
+                          color: Colors.white,
+                          child: ListTile(
+                            title: Text(cartItem.itemName),
+                            subtitle: Text(cartItem.price.toString()),
+                            leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(4.w),
+                                child: Image.network(cartItem.itemImage)),
+                            trailing: SizedBox(
+                              width: 23.w,
+                              child: Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      cartItem.quantity--;
+                                    },
+                                    child: Container(
+                                      width: 6.w,
+                                      height: 5.5.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(4),
+                                          color: Theme.of(context).primaryColor),
+                                      child: Center(
+                                          child: Icon(CupertinoIcons.minus,
+                                              size: 12.sp,
+                                              color: const Color(0xFFcaa49f))),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 2.w),
+                                      child: Text(cartItem.quantity.toString())),
+                                  GestureDetector(
+                                    onTap: () {
+                                      cartItem.quantity++;
+                                    },
+                                    child: Container(
+                                      width: 6.w,
+                                      height: 5.5.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(4),
+                                          color: const Color(0xFFcaa49f)),
+                                      child: Center(
+                                        child: Icon(CupertinoIcons.plus,
+                                            color: Theme.of(context).primaryColor,
+                                            size: 12.sp),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      )
-                    ],
+                      );
+                    },
                   ),
-                ),
-              ),
+                );
+              },
             ),
-            const Spacer(),
             Padding(
               padding: EdgeInsets.only(bottom: 7.h),
               child: Container(

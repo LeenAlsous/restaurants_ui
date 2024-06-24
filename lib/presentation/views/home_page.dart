@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:oop/business_logic/firebase/firebase_db.dart';
 import 'package:oop/business_logic/models/restaurants_info.dart';
 import 'package:oop/dummy_data/dummy_popular_menu.dart';
-import 'package:oop/presentation/views/restaurant.dart';
+import 'package:oop/presentation/views/restaurant_page.dart';
 import 'package:oop/presentation/widgets/carousel.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';

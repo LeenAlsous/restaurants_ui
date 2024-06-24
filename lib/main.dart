@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oop/firebase_options.dart';
 import 'package:oop/helper/secure_storage.dart';
 import 'package:oop/presentation/views/bottom_nav_bar.dart';
-import 'package:oop/presentation/views/login.dart';
+import 'package:oop/presentation/views/login_page.dart';
 import 'package:sizer/sizer.dart';
 
 void main() async{
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               } else {
                 return snapshot.hasData && snapshot.data != null
                     ? const BottomNavBar()
-                    : LogIn();
+                    : LogInPage();
               }
             },
           ));

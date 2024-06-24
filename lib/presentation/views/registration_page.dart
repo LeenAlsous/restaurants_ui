@@ -1,16 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:oop/business_logic/firebase/firebase_auth.dart';
+import 'package:oop/business_logic/models/app_user.dart';
 import 'package:oop/helper/validation_functions.dart';
-import 'package:oop/presentation/views/login.dart';
+import 'package:oop/presentation/views/login_page.dart';
 import 'package:oop/presentation/widgets/background.dart';
 import 'package:sizer/sizer.dart';
 
-class Registration extends StatelessWidget {
-  Registration({Key? key}) : super(key: key);
+class RegistrationPage extends StatelessWidget {
+  RegistrationPage({Key? key}) : super(key: key);
   final fKey = GlobalKey<FormState>();
   final FireAuth fire = FireAuth();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController confirmController = TextEditingController();
 
 
@@ -41,6 +45,7 @@ class Registration extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: nameController,
                     validator: (name) {
                       if (name!.isEmpty) {
                         return 'name shouldn\'t be empty';
@@ -63,6 +68,7 @@ class Registration extends StatelessWidget {
                 SizedBox(
                   width: 78.w,
                   child: TextFormField(
+                    controller: usernameController,
                     validator: (username) {
                       if (username!.isEmpty) {
                         return 'username shouldn\'t be empty';
@@ -160,7 +166,8 @@ class Registration extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         if(fKey.currentState!.validate()){
-                          fire.registerUser(context, email: emailController.text, password: passwordController.text);
+                          AppUser appUser = AppUser(name: nameController.text, username: usernameController.text, email: emailController.text, createdOn: Timestamp.now());
+                          fire.registerUser(context, appUser: appUser, password: passwordController.text);
                           FocusManager.instance.primaryFocus!.unfocus();
                         }
                       },
@@ -180,7 +187,7 @@ class Registration extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => LogIn()));
+                            MaterialPageRoute(builder: (context) => LogInPage()));
                       },
                       child: const Text(
                         'Log in',

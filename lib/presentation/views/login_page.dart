@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:oop/business_logic/firebase/firebase_auth.dart';
 import 'package:oop/helper/secure_storage.dart';
-import 'package:oop/presentation/views/registration.dart';
+import 'package:oop/presentation/views/registration_page.dart';
 import 'package:oop/presentation/widgets/background.dart';
 import 'package:sizer/sizer.dart';
 
-class LogIn extends StatelessWidget {
-  LogIn({Key? key}) : super(key: key);
+class LogInPage extends StatelessWidget {
+  LogInPage({Key? key}) : super(key: key);
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -107,7 +107,7 @@ class LogIn extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Registration()));
+                              builder: (context) => RegistrationPage()));
                     },
                     child: const Text(
                       'Forgot password?',
@@ -121,7 +121,7 @@ class LogIn extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Registration()));
+                                builder: (context) => RegistrationPage()));
                       },
                       child: const Text(
                         'Register',

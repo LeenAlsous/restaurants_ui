@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oop/business_logic/firebase/firebase_db.dart';
 import 'package:oop/business_logic/models/menu_item.dart';
 import 'package:oop/business_logic/models/restaurants_info.dart';
-import 'package:oop/dummy_data/users_dummy_data.dart';
+import 'package:oop/dummy_data/testimonials_dummy_data.dart';
 import 'package:oop/helper/shared_preferences.dart';
 import 'package:oop/presentation/widgets/item_bottom_sheet.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
@@ -212,7 +212,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                   // String id = doc.id; //use it later
                                   return GestureDetector(
                                     onTap: () {
-                                      ModalBottomSheet.show(context, item);
+                                      ModalBottomSheet.show(context, item, widget.restaurant.name);
                                     },
                                     child: CustomContainer(
                                       detail: item,
@@ -237,7 +237,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                           itemBuilder: (context, index) => Row(
                             children: [
                               Image.asset(
-                                users[index].profileImage,
+                                testimonials[index].profileImage,
                                 height: 10.h,
                                 width: 10.h,
                               ),
@@ -245,13 +245,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(users[index].name),
-                                  Text(users[index].testimonial),
+                                  Text(testimonials[index].name),
+                                  Text(testimonials[index].testimonial),
                                 ],
                               )
                             ],
                           ),
-                          itemCount: users.length,
+                          itemCount: testimonials.length,
                         ),
                       )
                     ],
