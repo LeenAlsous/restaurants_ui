@@ -17,30 +17,6 @@ class _CartPageState extends State<CartPage> {
   SharedPrefs pref = SharedPrefs();
 
   @override
-  void initState() {
-    super.initState();
-    //quantity = pref.getQuantity(restaurants[0].items[2].id);
-  }
-
-  /* void increment() async {
-    int current = await pref.getQuantity(restaurants[0].items[2].id);
-    setState(() {
-      pref.setQuantity(restaurants[0].items[2].id, current + 1);
-      quantity = Future.value(current + 1);
-    });
-  }*/
-
-  /*void decrement() async {
-    int current = await pref.getQuantity(restaurants[0].items[2].id);
-    if (current > 1) {
-      setState(() {
-        pref.setQuantity(restaurants[0].items[2].id, current - 1);
-        quantity = Future.value(current - 1);
-      });
-    }
-  }*/
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -72,6 +48,7 @@ class _CartPageState extends State<CartPage> {
                     itemBuilder: (context, index) {
                       DocumentSnapshot doc = cart[index];
                       CartItem cartItem = doc.data() as CartItem;
+                      String docId = doc.id;
                       return Padding(
                         padding: EdgeInsets.symmetric(vertical: 0.5.h),
                         child: Card(
@@ -88,14 +65,16 @@ class _CartPageState extends State<CartPage> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      cartItem.quantity--;
+                                      FireStoreDb().updateQuantity(cartItem.quantity, docId, '-');
                                     },
                                     child: Container(
                                       width: 6.w,
                                       height: 5.5.w,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
-                                          color: Theme.of(context).primaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                          color:
+                                              Theme.of(context).primaryColor),
                                       child: Center(
                                           child: Icon(CupertinoIcons.minus,
                                               size: 12.sp,
@@ -105,20 +84,23 @@ class _CartPageState extends State<CartPage> {
                                   Padding(
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 2.w),
-                                      child: Text(cartItem.quantity.toString())),
+                                      child:
+                                          Text(cartItem.quantity.toString(), style: TextStyle(fontSize: 16.sp),)),
                                   GestureDetector(
                                     onTap: () {
-                                      cartItem.quantity++;
+                                      FireStoreDb().updateQuantity(cartItem.quantity, docId, '+');
                                     },
                                     child: Container(
                                       width: 6.w,
                                       height: 5.5.w,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                           color: const Color(0xFFcaa49f)),
                                       child: Center(
                                         child: Icon(CupertinoIcons.plus,
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             size: 12.sp),
                                       ),
                                     ),
@@ -216,8 +198,3 @@ class _CartPageState extends State<CartPage> {
     );
   }
 }
-
-/*Text(
-                          quantity.toString(),
-                          style: TextStyle(fontSize: 16.sp),
-                        ),*/

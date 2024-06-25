@@ -106,7 +106,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                   shape:
                                       MaterialStatePropertyAll(CircleBorder())),
                               icon: FutureBuilder<bool>(
-                                future: pref.getFavorite(widget.restaurant.id),
+                                future: pref.getFavorite(widget.id),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -131,11 +131,11 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               ),
                               onPressed: () async {
                                 if (await pref
-                                        .getFavorite(widget.restaurant.id) ==
+                                        .getFavorite(widget.id) ==
                                     true) {
-                                  pref.removeFavorite(widget.restaurant.id);
+                                  pref.removeFavorite(widget.id);
                                 } else {
-                                  pref.setFavorite(widget.restaurant.id);
+                                  pref.setFavorite(widget.id);
                                 }
                                 setState(() {});
                               }),

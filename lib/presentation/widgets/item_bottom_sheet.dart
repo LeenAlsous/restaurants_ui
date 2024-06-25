@@ -7,7 +7,7 @@ import 'package:oop/presentation/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 
 class ModalBottomSheet {
-  static void show(BuildContext context, MenuItem item, String name) {
+  static void show(BuildContext context, MenuItem item, String restaurantName) {
     int quantity = 0;
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -88,7 +88,7 @@ class ModalBottomSheet {
                       onPressed: () {
                         final cart = CartItem(
                             itemName: item.item,
-                            restaurantName: name,
+                            restaurantName: restaurantName,
                             itemImage: item.image,
                             quantity: quantity,
                             price: item.price);

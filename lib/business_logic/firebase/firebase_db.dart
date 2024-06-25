@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:oop/business_logic/models/app_user.dart';
 import 'package:oop/business_logic/models/cart_item.dart';
 import 'package:oop/business_logic/models/menu_item.dart';
 import 'package:oop/business_logic/models/restaurants_info.dart';
-import 'package:oop/business_logic/models/app_user.dart';
 
 class FireStoreDb {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -63,5 +63,23 @@ class FireStoreDb {
       return cartRef.snapshots();
     }
     return null;
+  }
+
+  void updateQuantity(int quantity, String docId, String operation) {
+    if (user != null) {
+      final cartRef =
+          _db.collection('users').doc(user?.uid).collection('cart').doc(docId);
+      if(operation == '+'){
+        cartRef.update({'quantity': FieldValue.increment(1)});
+      } else{
+        if(quantity > 1){
+          cartRef.update({'quantity': FieldValue.increment(-1)});
+        }
+      }
+    }
+  }
+
+  void calculateTotals(){
+
   }
 }
