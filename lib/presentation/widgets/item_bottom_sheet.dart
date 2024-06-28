@@ -8,7 +8,7 @@ import 'package:sizer/sizer.dart';
 
 class ModalBottomSheet {
   static void show(BuildContext context, MenuItem item, String restaurantName) {
-    int quantity = 0;
+    int quantity = 1;
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
@@ -91,7 +91,9 @@ class ModalBottomSheet {
                             restaurantName: restaurantName,
                             itemImage: item.image,
                             quantity: quantity,
-                            price: item.price);
+                            price: item.price,
+                          id: item.id
+                        );
                         FireStoreDb().addToCart(cart);
                       },
                     )
