@@ -56,9 +56,13 @@ class _CartPageState extends State<CartPage> {
                               child: ListTile(
                                 title: Text(cartItem.itemName),
                                 subtitle: Text(cartItem.price.toString()),
-                                leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.w),
-                                    child: Image.network(cartItem.itemImage)),
+                                leading: SizedBox(
+                                  width: 18.w,
+                                  height: 15.h,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(4.w),
+                                      child: Image.network(cartItem.itemImage, fit: BoxFit.fill,)),
+                                ),
                                 trailing: SizedBox(
                                   width: 23.w,
                                   child: Row(

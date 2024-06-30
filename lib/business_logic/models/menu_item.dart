@@ -14,7 +14,7 @@ class MenuItem implements Details {
       SnapshotOptions? options) {
     final data = snapshot.data();
     return MenuItem(
-        data?['id'] ?? '', data?['item']?? 'dish', data?['price'], data?['image'], data?['ingredients']??[]);
+        data?['id'] ?? snapshot.id, data?['item']?? 'dish', data?['price'], data?['image'], data?['ingredients']??[]);
   }
 
   Map<String, dynamic> toMap() {

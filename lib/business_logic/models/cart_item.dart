@@ -16,16 +16,17 @@ class CartItem {
       required this.price,
       required this.id});
 
-  factory CartItem.fromMap(DocumentSnapshot<Map<String, dynamic>> snapshot,
+  factory CartItem.fromMap(DocumentSnapshot<Map<String, dynamic>> doc,
       SnapshotOptions? options) {
-    final data = snapshot.data();
+    final data = doc.data();
     return CartItem(
         itemName: data?['itemName'],
         restaurantName: data?['restaurantName'],
         itemImage: data?['itemImage'],
         quantity: data?['quantity'],
         price: data?['price'],
-      id: snapshot.id
+       id: (data?['id'] == null || data?['id'] == "") ? doc.id : data?['id'],
+
     );
   }
 

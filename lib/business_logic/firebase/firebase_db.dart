@@ -9,7 +9,7 @@ class FireStoreDb {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final user = FirebaseAuth
       .instance.currentUser; // keep it here? or pass it as an argument?
-  double subTotal = 0.0;
+  //double subTotal = 0.0;
 
   Stream<QuerySnapshot> getAllRestaurants() {
     final restaurantsRef = _db.collection('restaurants').withConverter(
@@ -47,8 +47,14 @@ class FireStoreDb {
           .collection('cart')
           .withConverter(
               fromFirestore: CartItem.fromMap,
-              toFirestore: (CartItem toCart, _) => toCart.toMap());
-      await cartRef.add(cart);
+              toFirestore: (CartItem toCart, _) => toCart.toMap()).doc(cart.id);
+      cartRef.get().then((doc) => {
+        if(doc.exists){
+          addQuantity(cart.quantity, cart.id)
+        } else{
+          cartRef.set(cart)
+        }
+      });
     }
   }
 
@@ -75,7 +81,13 @@ class FireStoreDb {
     }
   }
 
-   calculateTotals(List cart){
+  void addQuantity(int newQuantity, String id){
+    final cartRef =
+    _db.collection('users').doc(user?.uid).collection('cart').doc(id);
+      cartRef.update({'quantity': FieldValue.increment(newQuantity)});
+  }
+
+   double calculateTotals(List cart){
     double calculatedTotal = 0.0;
     for(CartItem item in cart){
       calculatedTotal += item.price * item.quantity;
