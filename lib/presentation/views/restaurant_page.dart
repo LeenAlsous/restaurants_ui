@@ -1,14 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_db.dart';
+import 'package:oop/business_logic/models/menu_item.dart';
 import 'package:oop/business_logic/models/restaurants_info.dart';
-import 'package:oop/dummy_data/users_dummy_data.dart';
+import 'package:oop/dummy_data/testimonials_dummy_data.dart';
 import 'package:oop/helper/shared_preferences.dart';
+import 'package:oop/presentation/widgets/item_bottom_sheet.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
 import 'package:sizer/sizer.dart';
 
 class RestaurantPage extends StatefulWidget {
   final RestaurantInfo restaurant;
+  final String id;
 
-  const RestaurantPage({Key? key, required this.restaurant}) : super(key: key);
+  const RestaurantPage({Key? key, required this.restaurant, required this.id})
+      : super(key: key);
 
   @override
   State<RestaurantPage> createState() => _RestaurantPageState();
@@ -100,7 +106,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                   shape:
                                       MaterialStatePropertyAll(CircleBorder())),
                               icon: FutureBuilder<bool>(
-                                future: pref.getFavorite(widget.restaurant.id),
+                                future: pref.getFavorite(widget.id),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -125,11 +131,11 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               ),
                               onPressed: () async {
                                 if (await pref
-                                    .getFavorite(widget.restaurant.id) ==
+                                        .getFavorite(widget.id) ==
                                     true) {
-                                  pref.removeFavorite(widget.restaurant.id);
+                                  pref.removeFavorite(widget.id);
                                 } else {
-                                  pref.setFavorite(widget.restaurant.id);
+                                  pref.setFavorite(widget.id);
                                 }
                                 setState(() {});
                               }),
@@ -187,15 +193,36 @@ class _RestaurantPageState extends State<RestaurantPage> {
                               )),
                         ],
                       ),
-                      SizedBox(
-                          height: 25.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => CustomContainer(
-                              detail: widget.restaurant.items[index],
-                            ),
-                            itemCount: widget.restaurant.items.length,
-                          )),
+                      StreamBuilder(
+                        stream: FireStoreDb().getMenu(widget.id),
+                        builder: (context, snapshot) {
+                          List menu = snapshot.data?.docs ?? [];
+                          if (menu.isEmpty) {
+                            return const Center(
+                              child: Text('No restaurants available'),
+                            );
+                          }
+                          return SizedBox(
+                              height: 25.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  DocumentSnapshot doc = menu[index];
+                                  MenuItem item = doc.data() as MenuItem;
+                                  // String id = doc.id; //use it later
+                                  return GestureDetector(
+                                    onTap: () {
+                                      ModalBottomSheet.show(context, item, widget.restaurant.name);
+                                    },
+                                    child: CustomContainer(
+                                      detail: item,
+                                    ),
+                                  );
+                                },
+                                itemCount: menu.length,
+                              ));
+                        },
+                      ),
                       SizedBox(height: 2.h),
                       const Align(
                           alignment: Alignment.centerLeft,
@@ -210,7 +237,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                           itemBuilder: (context, index) => Row(
                             children: [
                               Image.asset(
-                                users[index].profileImage,
+                                testimonials[index].profileImage,
                                 height: 10.h,
                                 width: 10.h,
                               ),
@@ -218,13 +245,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(users[index].name),
-                                  Text(users[index].testimonial),
+                                  Text(testimonials[index].name),
+                                  Text(testimonials[index].testimonial),
                                 ],
                               )
                             ],
                           ),
-                          itemCount: users.length,
+                          itemCount: testimonials.length,
                         ),
                       )
                     ],

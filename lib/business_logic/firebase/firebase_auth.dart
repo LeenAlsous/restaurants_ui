@@ -1,19 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_db.dart';
+import 'package:oop/business_logic/models/app_user.dart';
 import 'package:oop/presentation/views/bottom_nav_bar.dart';
-import 'package:oop/presentation/views/login.dart';
+import 'package:oop/presentation/views/login_page.dart';
 
 class FireAuth {
-  User? user;
+  //User? user;
   FirebaseAuth auth = FirebaseAuth.instance;
   static String usedEmail = '';
 
-  void registerUser(BuildContext context,{required String email, required String password}) async {
+  void registerUser(BuildContext context,{required AppUser appUser, required String password}) async {
     try {
       UserCredential register = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+          email: appUser.email, password: password);
       if(register.user != null && context.mounted){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogIn(),));
+        FireStoreDb().createUser(appUser, register.user!.uid);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LogInPage(),));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {

@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oop/business_logic/firebase/firebase_db.dart';
+import 'package:oop/business_logic/models/restaurants_info.dart';
 import 'package:oop/dummy_data/dummy_popular_menu.dart';
-import 'package:oop/dummy_data/restaurants_dummy_info.dart';
-import 'package:oop/presentation/views/restaurant.dart';
+import 'package:oop/presentation/views/restaurant_page.dart';
 import 'package:oop/presentation/widgets/carousel.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
+import 'package:oop/presentation/widgets/shimmy_shimmer.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sizer/sizer.dart';
 
@@ -26,7 +29,11 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Find your\nfavorite food', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
+                    Text(
+                      'Find your\nfavorite food',
+                      style: TextStyle(
+                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                    ),
                     Icon(
                       Icons.notifications_none,
                       color: Colors.greenAccent,
@@ -85,15 +92,52 @@ class HomePage extends StatelessWidget {
                         ))
                   ],
                 ),
-                SizedBox(
-                    height: 27.h,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));
-                      itemBuilder: (context, index) =>
-                          GestureDetector(onTap: (){pushWithoutNavBar(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));},child: CustomContainer(detail: restaurants[index])),
-                      itemCount: restaurants.length,
-                    )),
+                StreamBuilder(
+                  stream: FireStoreDb().getAllRestaurants(),
+                  builder: (context, snapshot) {
+                    List restaurants = snapshot.data?.docs ?? [];
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SizedBox(
+                          height: 27.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, index) => SizedBox( width: 45.w, height: 72.h, child: const Shimmery()),
+                          ));
+                    }
+                    if (restaurants.isEmpty) {
+                      return const Center(
+                        child: Text('No restaurants available'),
+                      );
+                    }
+                    return SizedBox(
+                        height: 27.h,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));
+                          itemBuilder: (context, index) {
+                            QueryDocumentSnapshot doc = restaurants[index];
+                            RestaurantInfo restaurant =
+                                doc.data() as RestaurantInfo;
+                            String documentId = doc.id;
+                            return GestureDetector(
+                                onTap: () {
+                                  pushWithoutNavBar(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RestaurantPage(
+                                            restaurant: restaurant,
+                                            id: documentId),
+                                      ));
+                                },
+                                child: CustomContainer(
+                                  detail: restaurant,
+                                ));
+                          },
+                          itemCount: restaurants.length,
+                        ));
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
