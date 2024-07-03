@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:oop/business_logic/models/details.dart';
 import 'package:sizer/sizer.dart';
@@ -20,7 +21,7 @@ class CustomContainer extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(top: 1.h),
-            child: ClipRRect( borderRadius: BorderRadius.circular(10), child: Image.network(detail.photo, width: 40.w, height: 17.h, fit: BoxFit.fill,)),
+            child: ClipRRect( borderRadius: BorderRadius.circular(10), child: CachedNetworkImage(imageUrl: detail.photo, width: 40.w, height: 17.h, fit: BoxFit.fill,)),
           ),
           Text(detail.title),
           Text(detail.subTitle)

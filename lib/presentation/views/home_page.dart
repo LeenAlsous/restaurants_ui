@@ -7,6 +7,7 @@ import 'package:oop/dummy_data/dummy_popular_menu.dart';
 import 'package:oop/presentation/views/restaurant_page.dart';
 import 'package:oop/presentation/widgets/carousel.dart';
 import 'package:oop/presentation/widgets/custom_container.dart';
+import 'package:oop/presentation/widgets/shimmy_shimmer.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sizer/sizer.dart';
 
@@ -28,7 +29,11 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Find your\nfavorite food', style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),),
+                    Text(
+                      'Find your\nfavorite food',
+                      style: TextStyle(
+                          fontSize: 20.sp, fontWeight: FontWeight.bold),
+                    ),
                     Icon(
                       Icons.notifications_none,
                       color: Colors.greenAccent,
@@ -91,6 +96,15 @@ class HomePage extends StatelessWidget {
                   stream: FireStoreDb().getAllRestaurants(),
                   builder: (context, snapshot) {
                     List restaurants = snapshot.data?.docs ?? [];
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return SizedBox(
+                          height: 27.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, index) => SizedBox( width: 45.w, height: 72.h, child: const Shimmery()),
+                          ));
+                    }
                     if (restaurants.isEmpty) {
                       return const Center(
                         child: Text('No restaurants available'),
@@ -103,7 +117,8 @@ class HomePage extends StatelessWidget {
                           // Navigator.push(context, MaterialPageRoute(builder: (context) => RestaurantPage(restaurant: restaurants[index]),));
                           itemBuilder: (context, index) {
                             QueryDocumentSnapshot doc = restaurants[index];
-                            RestaurantInfo restaurant = doc.data() as RestaurantInfo;
+                            RestaurantInfo restaurant =
+                                doc.data() as RestaurantInfo;
                             String documentId = doc.id;
                             return GestureDetector(
                                 onTap: () {
@@ -111,11 +126,13 @@ class HomePage extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => RestaurantPage(
-                                            restaurant: restaurant, id: documentId),
+                                            restaurant: restaurant,
+                                            id: documentId),
                                       ));
                                 },
-                                child: CustomContainer(detail: restaurant,)
-                            );
+                                child: CustomContainer(
+                                  detail: restaurant,
+                                ));
                           },
                           itemCount: restaurants.length,
                         ));

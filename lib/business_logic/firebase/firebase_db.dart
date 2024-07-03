@@ -18,6 +18,14 @@ class FireStoreDb {
     return restaurantsRef.snapshots();
   }
 
+  Future<List<RestaurantInfo>> getRestaurantsList() async {
+    QuerySnapshot restaurantsRef = await _db.collection('restaurants').get();
+    return restaurantsRef.docs
+        .map((doc) => RestaurantInfo.fromFireStore(
+            doc.data() as Map<String, dynamic>, null))
+        .toList();
+  }
+
   Stream<QuerySnapshot> getMenu(String id) {
     final menuRef = _db
         .collection('restaurants')
@@ -47,19 +55,19 @@ class FireStoreDb {
           .collection('cart')
           .withConverter(
               fromFirestore: CartItem.fromMap,
-              toFirestore: (CartItem toCart, _) => toCart.toMap()).doc(cart.id);
+              toFirestore: (CartItem toCart, _) => toCart.toMap())
+          .doc(cart.id);
       cartRef.get().then((doc) => {
-        if(doc.exists){
-          addQuantity(cart.quantity, cart.id)
-        } else{
-          cartRef.set(cart)
-        }
-      });
+            if (doc.exists)
+              {addQuantity(cart.quantity, cart.id)}
+            else
+              {cartRef.set(cart)}
+          });
     }
   }
 
   Stream<List<CartItem>> getCart() {
-    if(user != null){
+    if (user != null) {
       final cartRef = _db.collection('users').doc(user?.uid).collection('cart');
       return cartRef.snapshots().map((snapshot) =>
           snapshot.docs.map((doc) => CartItem.fromMap(doc, null)).toList());
@@ -71,25 +79,25 @@ class FireStoreDb {
     if (user != null) {
       final cartRef =
           _db.collection('users').doc(user?.uid).collection('cart').doc(docId);
-      if(operation == '+'){
+      if (operation == '+') {
         cartRef.update({'quantity': FieldValue.increment(1)});
-      } else{
-        if(quantity > 1){
+      } else {
+        if (quantity > 1) {
           cartRef.update({'quantity': FieldValue.increment(-1)});
         }
       }
     }
   }
 
-  void addQuantity(int newQuantity, String id){
+  void addQuantity(int newQuantity, String id) {
     final cartRef =
-    _db.collection('users').doc(user?.uid).collection('cart').doc(id);
-      cartRef.update({'quantity': FieldValue.increment(newQuantity)});
+        _db.collection('users').doc(user?.uid).collection('cart').doc(id);
+    cartRef.update({'quantity': FieldValue.increment(newQuantity)});
   }
 
-   double calculateTotals(List cart){
+  double calculateTotals(List cart) {
     double calculatedTotal = 0.0;
-    for(CartItem item in cart){
+    for (CartItem item in cart) {
       calculatedTotal += item.price * item.quantity;
     }
     return calculatedTotal;

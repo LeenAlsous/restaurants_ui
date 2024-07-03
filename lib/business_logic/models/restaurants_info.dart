@@ -38,6 +38,20 @@ class RestaurantInfo implements Details {
         items: data?['menu']??[]);
   }
 
+  factory RestaurantInfo.fromFireStore(
+      Map<String, dynamic> data,
+      SnapshotOptions? options) {
+    return RestaurantInfo(
+        name: data['name'],
+        logo: data['logo'],
+        distance: data['distance'],
+        description: data['description'],
+        rating: data['rating'],
+        tag: data['tag'],
+        id: data['id']??'',
+        items: data['menu']??[]);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
